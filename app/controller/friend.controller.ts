@@ -56,4 +56,28 @@ export class FriendController {
     
     ctx.result['data'] = true;
   }
+  
+  /**
+   * @api {get} /friend/list
+   * @apiDescription  亲友列表
+   * @apiName update
+   * @apiGroup Api
+   * @apiVersion 1.0.0
+   */
+  public async lists(ctx: any) {
+    const {uid} = ctx.request.body;
+    if (!uid)
+      throw new CustomError('缺少参数', {msg: 'id缺少'});
+    
+    const result = await db.FriendModel.findAll(
+      {
+        where: {
+          uid
+        },
+        order: 'id desc'
+      }
+    );
+    
+    ctx.result['data'] = result;
+  }
 }

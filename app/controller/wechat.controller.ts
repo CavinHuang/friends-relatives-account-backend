@@ -5,7 +5,7 @@ import wechat from '../config/env/wechat'
 import { CustomError } from '../utils/error_constructor';
 
 export default class UserController {
-  async saveUserInfo(ctx: any) {
+  public async saveUserInfo(ctx: any) {
     const { avatarUrl, city, country, gender, language, nickName, province, jscode } = ctx.request.body
     if (!jscode) throw new CustomError('缺少参数', { msg: 'jscode缺少' });
     // https://api.weixin.qq.com/sns/jscode2session?appid=APPID&secret=SECRET&js_code=JSCODE&grant_type=authorization_code
@@ -23,19 +23,28 @@ export default class UserController {
     if (errcode) {
       throw new CustomError(errcode, { msg: errmsg });
     } else {
-      const result = db.WechatUserInfoModel.create({
-        avatarUrl,
-        city,
-        country,
-        gender,
-        language,
-        nickName,
-        province,
-        openid
+      const wechatUser = await db.WechatUserInfoModel.findOne({
+        where: {
+          openid
+        }
       })
-      // 返回
-      ctx.result['data'] = {
-        info: result,
+      if (wechatUser) {
+        wechatUser.session_key = session_key
+        ctx.result['data'] = wechatUser
+      } else {
+        const result = await db.WechatUserInfoModel.create({
+          avatarUrl,
+          city,
+          country,
+          gender,
+          language,
+          nickName,
+          province,
+          openid
+        })
+        // 返回
+        result.session_key = session_key
+        ctx.result['data'] = result
       }
     }
   }

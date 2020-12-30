@@ -10,6 +10,8 @@ import {FriendController} from '../controller/friend.controller';
 const $ = new FriendController();
 
 module.exports = (Router: any): void => {
-  Router.post('/friend/add', $.add) // 创建文章
+  Router
+    .post('/friend/add', $.add) // 创建文章
     .post('/friend/update', $.update) // 文章修改
+    .get('/friend/list', $.lists)
 };
