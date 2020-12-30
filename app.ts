@@ -29,6 +29,7 @@ app.use(auth());
 routers(router);
 app.use(router.routes());
 
+// 启动
 app.listen(config.port, (): void => {
   console.log(`Server running on port ${config.port}`);
 });

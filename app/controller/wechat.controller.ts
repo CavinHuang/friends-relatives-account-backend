@@ -2,11 +2,12 @@
 import db from '../model'; // 数据库模型
 import axios from 'axios'
 import wechat from '../config/env/wechat'
+import { CustomError } from '../utils/error_constructor';
 
 export default class UserController {
   async saveUserInfo(ctx: any) {
     const { avatarUrl, city, country, gender, language, nickName, province, jscode } = ctx.request.body
-
+    if (!jscode) throw new CustomError('缺少参数', { msg: 'jscode缺少' });
     // https://api.weixin.qq.com/sns/jscode2session?appid=APPID&secret=SECRET&js_code=JSCODE&grant_type=authorization_code
     // 获取远程的微信的openid
     const data = await axios('https://api.weixin.qq.com/sns/jscode2session', {
@@ -20,11 +21,9 @@ export default class UserController {
     const { errcode, errmsg, openid, session_key } = data.data
 
     if (errcode) {
-      ctx.body = {
-        msg: errmsg
-      }
+      throw new CustomError(errcode, { msg: errmsg });
     } else {
-      db.WechatUserInfo.create({
+      const result = db.WechatUserInfoModel.create({
         avatarUrl,
         city,
         country,
@@ -34,11 +33,10 @@ export default class UserController {
         province,
         openid
       })
-      ctx.body = {
-        code: 1,
-        msg: '成功'
+      // 返回
+      ctx.result['data'] = {
+        info: result,
       }
     }
-
   }
 }
