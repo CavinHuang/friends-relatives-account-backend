@@ -11,5 +11,5 @@ const $ = new BillCateController();
 
 module.exports = (Router: any): void => {
   Router.post('/bill_cate/add', $.add) // 创建文章
-    .patch('/bill_cate/update', $.update) // 文章修改
+    .post('/bill_cate/update', $.update) // 文章修改
 };
