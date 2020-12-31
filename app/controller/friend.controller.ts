@@ -7,24 +7,30 @@
 */
 import {CustomError} from "../utils/error_constructor";
 import db from "../model";
+// @ts-ignore
+import pyfl from 'pyfl'
 
 export class FriendController {
   
   /**
-   * @api {post} /bill/add
-   * @apiDescription  修改文章
+   * @api {post} /friend/add
+   * @apiDescription  增加亲友
    * @apiName add
    * @apiGroup Api
    * @apiVersion 1.0.0
    */
   public async add (ctx: any) {
-    const {name, belong, sex, remark} = ctx.request.body
+    const {name, uid, belong, sex, remark} = ctx.request.body
     if (!name || !belong) throw new CustomError('缺少必要参数', { msg: 'name和belong不能为空' })
+    
+    const firstName = pyfl(name).substr(0, 1)
     
     const result = await db.FriendModel.create({
       name,
+      first_word: firstName,
       belong,
       sex,
+      uid,
       remark
     })
     ctx.result['data'] = {
@@ -65,7 +71,7 @@ export class FriendController {
    * @apiVersion 1.0.0
    */
   public async lists(ctx: any) {
-    const {uid} = ctx.request.body;
+    const {uid} = ctx.request.query;
     if (!uid)
       throw new CustomError('缺少参数', {msg: 'id缺少'});
     
@@ -74,7 +80,9 @@ export class FriendController {
         where: {
           uid
         },
-        order: 'id desc'
+        order: [
+          ['id', 'DESC']
+        ]
       }
     );
     

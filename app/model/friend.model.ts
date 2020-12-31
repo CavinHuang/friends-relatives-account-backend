@@ -29,9 +29,16 @@ module.exports = (sequelize: Sequelize) => {
       defaultValue: '',
       comment: '亲友名称'
     },
+    first_word: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      defaultValue: '',
+      comment: '亲友名称首字母'
+    },
     belong: {
       type: DataTypes.INTEGER,
       allowNull: false,
+      defaultValue: 0,
       comment: '所属亲友ID'
     },
     sex: {
