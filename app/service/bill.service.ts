@@ -11,9 +11,11 @@ import db from "../model";
 export default class BillService {
   
   public static async add (changeData: BillField) {
-    const {type, number, bill_cate, friend, remark} = changeData
+    const {type, number, bill_cate, friend, remark, uid, time} = changeData
     return await db.BillModel.create({
       type,
+      uid,
+      time,
       number,
       bill_cate,
       friend,

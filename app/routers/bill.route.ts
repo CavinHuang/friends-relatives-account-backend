@@ -9,5 +9,7 @@ import {BillController} from '../controller/bill.controller'
 const $ = new BillController()
 
 module.exports = (Route: any):void => {
-  Route.post('/bill/add', $.add)
+  Route
+    .post('/bill/add', $.add)
+    .get('/bill/lists',$.yearLists)
 }

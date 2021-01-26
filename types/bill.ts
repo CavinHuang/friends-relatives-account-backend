@@ -15,4 +15,6 @@ export interface BillField {
   friend: number;
   bill_cate: number;
   remark?: string;
+  uid: number;
+  time: number;
 }

@@ -44,6 +44,12 @@ module.exports = (sequelize: Sequelize) => {
         allowNull: false,
         comment: '所属分类ID'
       },
+      time: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        defaultValue: Math.ceil((new Date().getTime()) / 1000),
+        comment: '发生时间'
+      },
       remark: {
         type: DataTypes.STRING,
         allowNull: true
