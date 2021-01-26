@@ -9,6 +9,7 @@ import {CustomError} from "../utils/error_constructor";
 import db from "../model";
 // @ts-ignore
 import pyfl from 'pyfl'
+import FriendService from "../service/friend.service";
 
 export class FriendController {
   
@@ -71,7 +72,7 @@ export class FriendController {
    * @apiVersion 1.0.0
    */
   public async lists(ctx: any) {
-    const {uid} = ctx.request.query;
+    const {uid, all} = ctx.request.query;
     if (!uid)
       throw new CustomError('缺少参数', {msg: 'id缺少'});
     
@@ -81,11 +82,16 @@ export class FriendController {
           uid
         },
         order: [
+          ['first_word', 'asc'],
           ['id', 'DESC']
         ]
       }
     );
-    
-    ctx.result['data'] = result;
+    if (all) {
+      ctx.result['data'] = result;
+    } else {
+      const indexDatas = FriendService.computedIndexLists(result)
+      ctx.result['data'] = indexDatas;
+    }
   }
 }

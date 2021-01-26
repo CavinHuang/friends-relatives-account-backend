@@ -39,6 +39,17 @@ module.exports = (sequelize: Sequelize) => {
         type: DataTypes.STRING,
         allowNull: true,
         comment: '分类图标(保留字段)'
+      },
+      remark: {
+        type: DataTypes.STRING,
+        allowNull: true,
+        comment: '分类描述'
+      },
+      status: {
+        type: DataTypes.TINYINT,
+        allowNull: false,
+        defaultValue: 1,
+        comment: '分类状态：1、启用； 0、停用'
       }
     },
     {

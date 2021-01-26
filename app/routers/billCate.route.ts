@@ -10,6 +10,8 @@ import {BillCateController} from '../controller/billCate.controller';
 const $ = new BillCateController();
 
 module.exports = (Router: any): void => {
-  Router.post('/bill_cate/add', $.add) // 创建文章
+  Router
+    .get('/bill_cate/lists', $.lists) // 列表
+    .post('/bill_cate/add', $.add) // 创建文章
     .post('/bill_cate/update', $.update) // 文章修改
 };

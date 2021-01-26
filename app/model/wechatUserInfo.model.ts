@@ -2,6 +2,7 @@
 import { Model, Sequelize, DataTypes } from 'sequelize';
 module.exports = (sequelize: Sequelize) => {
   class WechatUserInfo extends Model { }
+  // @ts-ignore
   WechatUserInfo.init(
     {
       id: {
@@ -13,7 +14,6 @@ module.exports = (sequelize: Sequelize) => {
         type: DataTypes.STRING,
         comment: '微信方唯一ID',
         allowNull: false,
-        unique: true,
         defaultValue: ''
       },
       nickName: {
@@ -62,7 +62,7 @@ module.exports = (sequelize: Sequelize) => {
     {
       tableName: 'wechat_user_info', // 定义表名
       sequelize,
-      paranoid: true // 不实际删除数据库记录，而是设置一个新 deletedAt 属性，其值为当前日期 `paranoid` 仅在 `timestamps` 启用时可用
+      paranoid: true, // 不实际删除数据库记录，而是设置一个新 deletedAt 属性，其值为当前日期 `paranoid` 仅在 `timestamps` 启用时可用
     }
   )
 
