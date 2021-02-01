@@ -16,6 +16,7 @@ module.exports = (sequelize: Sequelize) => {
       type: DataTypes.INTEGER,
       autoIncrement: true,
       primaryKey: true,
+      unique: true,
       comment: '唯一id'
     },
     uid: {

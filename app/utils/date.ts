@@ -28,19 +28,16 @@ export function monthSize(oDate: Date) {
  */
 export function getMonthStartAndEnd(oDate: Date, month: number) {
   oDate = oDate ? oDate : new Date()
-  month = month ? month - 1 : oDate.getMonth()
+  month = month ? month : oDate.getMonth()
   
   const year = oDate.getFullYear()
-  const day = oDate.getDate()
-  
   let start:number = 0
   let end:number = 0
-  
   const _oDate = new Date(year + '/' + month + '/01')
   const endDay = monthSize(_oDate)
-  const _oDateEnd = new Date(year + '/' + month + '/' + endDay)
-  start = Math.floor((_oDate.getTime()) / 1000)
-  end = Math.floor((_oDateEnd.getTime()) / 1000)
+  const _oDateEnd = new Date(year + '/' + month + '/' + endDay + ' 23:59:59')
+  start = _oDate.getTime()
+  end = _oDateEnd.getTime()
   
   return { start, end }
 }
@@ -54,7 +51,25 @@ export function yearStartAndEnd(year: number) {
   const oEndDate = new Date(year + '/12/31')
   
   return {
-    start: Math.floor((oStartDate.getTime())/1000),
-    end: Math.floor((oEndDate.getTime())/1000)
+    start: oStartDate.getTime(),
+    end: oEndDate.getTime()
   }
+}
+export type weekType = 1 | 2 | 3 | 4 | 5 | 6 | 7
+
+/**
+ * 渲染中文星期
+ * @param num
+ */
+export function renderChineseWeek(num: weekType) {
+  const _map = {
+    1: '一',
+    2: '二',
+    3: '三',
+    4: '四',
+    5: '五',
+    6: '六',
+    7: '日'
+  }
+  return _map[num]
 }

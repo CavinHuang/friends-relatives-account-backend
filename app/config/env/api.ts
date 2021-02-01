@@ -10,9 +10,9 @@ export default {
   db_common: {
     host: '127.0.0.1', // 数据库地址
     port: 3306, // 数据库端口
-    dbname: 'blog_api', // 数据库名称
-    username: 'mysql', // 数据库用户名
-    password: '123456', // 数据库密码
+    dbname: 'friends-relatives-account', // 数据库名称
+    username: 'root', // 数据库用户名
+    password: '10idccom@', // 数据库密码
     dialect: 'mysql', // 数据库引擎
     logging: true, // 是否打印日志
     benchmark: true, // 打印sql执行时间 方便优化sql

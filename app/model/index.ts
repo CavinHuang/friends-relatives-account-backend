@@ -55,7 +55,7 @@ sequelize
   });
 
 // 关联
-const {UserModel, ArticleModel} = db;
+const {UserModel, ArticleModel, BillModel, FriendModel,BillCateModel } = db;
 UserModel.hasMany(ArticleModel, {foreignKey: 'uid', targetKey: 'id', as: 'artcleInfo'});
 
 ArticleModel.belongsTo(UserModel, {
@@ -64,5 +64,28 @@ ArticleModel.belongsTo(UserModel, {
   as: 'userInfo',
   constraints: false,
 });
+
+// BillModel.hasOne(FriendModel, {
+//   foreignKey: 'id',
+//   targetKey: 'friend',
+//   as: 'friendInfo'
+// })
+// FriendModel.belongsTo(BillModel, {
+//   foreignKey: 'friend',
+//   targetKey: 'id',
+//   as: 'bill',
+//   constraints: false,
+// })
+// BillModel.hasOne(BillCateModel, {
+//   foreignKey: 'id',
+//   targetKey: 'bill_cate',
+//   as: 'billCate'
+// });
+// FriendModel.belongsTo(BillCateModel, {
+//   foreignKey: 'bill_cate',
+//   targetKey: 'id',
+//   as: 'billCate',
+//   constraints: false,
+// })
 
 export default db;
